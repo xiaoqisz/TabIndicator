@@ -1,0 +1,452 @@
+package org.itheima.tabindicator.library;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.RectF;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+/*
+ *  @项目名：  TabIndicator 
+ *  @包名：    org.itheima.tabindicator.library
+ *  @文件名:   TabIndicator
+ *  @创建者:   Administrator
+ *  @描述：    TODO
+ */
+public class TabIndicator
+        extends HorizontalScrollView
+{
+    public final static String TAG = "TabIndicator";
+
+    // ######## Tab 的模式常量
+    public final static int TAB_MODE_LINE     = 0;
+    public final static int TAB_MODE_TRIANGLE = 1;
+    public final static int TAB_MODE_RECT     = 2;
+
+    // ######## rect 模式下的样式常量
+    public final static int RECT_STYLE_FILL   = 0;
+    public final static int RECT_STYLE_STROKE = 1;
+
+    // ######## triangle 模式下的样式常量
+    public final static int TRIANGLE_STYLE_FILL   = 0;
+    public final static int TRIANGLE_STYLE_STROKE = 1;
+
+    private LinearLayout    mTabContainer    = null;
+    private ViewPager       mViewPager       = null;//当前tab对应的ViewPager
+    private TabPageListener mTabPageListener = null;//页面的监听器
+
+    // ################### TAB 通用的属性 ################################
+    private int     mTabPaddingLeft   = 15;
+    private int     mTabPaddingRight  = 15;
+    private int     mTabPaddingTop    = 12;
+    private int     mTabPaddingBottom = 12;
+    private int     mTabBackground    = R.drawable.tab_bg_selector;
+    private int     mTabTextColor     = R.color.tab_textcolor_selector;
+    private int     mTabTextSize      = 18;
+    private boolean mTabTextBlod      = false;
+    private int     mUnderLineHeight  = 2;
+    private int     mUnderLineColor   = Color.BLACK;
+    private int     mTabMode          = TAB_MODE_TRIANGLE;
+
+    // ################## TAB line模式下的属性 ###########################
+    private int mLineHeight = 8;
+    private int mLineColor  = Color.BLUE;
+
+    // ################## TAB triangle模式下的属性 #######################
+    private int mTriangleHeight      = 8;
+    private int mTriangleWidth       = 20;
+    private int mTriangleColor       = Color.BLUE;
+    private int mTriangleStyle       = TRIANGLE_STYLE_STROKE;
+    private int mTriangleStrokeWidth = 2;
+
+    // ################## TAB rect模式下的属性 ###########################
+    private int mRectPaddingLeft   = 8;
+    private int mRectPaddingTop    = 8;
+    private int mRectPaddingRight  = 8;
+    private int mRectPaddingBottom = 8;
+    private int mRectColor         = Color.GREEN;
+    private int mRectRadius        = 10;
+    private int mRectStyle         = RECT_STYLE_STROKE;
+    private int mRectStrokeWidth   = 2;
+
+    private Paint mPaint        = new Paint();
+    private Path  mTrianglePath = null;
+
+    private float mPagerOffset     = 0f;
+    private int   mCurrentPosition = 0;
+
+    public TabIndicator(Context context)
+    {
+        this(context, null);
+    }
+
+    public TabIndicator(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+
+        //滑动条不可见
+        setFillViewport(true);
+        setWillNotDraw(false);
+        setHorizontalScrollBarEnabled(false);
+        setHorizontalFadingEdgeEnabled(false);
+        setBackgroundColor(Color.TRANSPARENT);
+
+        //创建tab容器
+        mTabContainer = new LinearLayout(context, attrs);
+        mTabContainer.setOrientation(LinearLayout.HORIZONTAL);
+        //        mTabContainer.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        addView(mTabContainer);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas)
+    {
+        super.onDraw(canvas);
+
+        switch (mTabMode)
+        {
+            case TAB_MODE_LINE:
+                // 画line
+                drawLine(canvas);
+                break;
+            case TAB_MODE_TRIANGLE:
+                //画triangle
+                drawTriangle(canvas);
+                break;
+            case TAB_MODE_RECT:
+                //画rect
+                drawRect(canvas);
+                break;
+            default:
+                break;
+        }
+
+        //画underLine
+        drawUnderLine(canvas);
+    }
+
+
+    /**
+     * draw line
+     * @param canvas 画布
+     */
+    private void drawLine(Canvas canvas)
+    {
+        //重置画笔
+        mPaint.reset();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(mLineColor);
+
+        //计算当前的left和right
+        float[] clr   = getCurrentLeftAndRight();
+        float   left  = clr[0];
+        float   right = clr[1];
+
+        float top    = getMeasuredHeight() - mUnderLineHeight - mLineHeight;
+        float bottom = getMeasuredHeight() - mUnderLineHeight;
+        canvas.drawRect(left, top, right, bottom, mPaint);
+    }
+
+    /**
+     * draw triangle
+     * @param canvas 画布
+     */
+    private void drawTriangle(Canvas canvas)
+    {
+        //重置画笔
+        mPaint.reset();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(mTriangleColor);
+
+        //计算当前的left和right
+        float[] clr   = getCurrentLeftAndRight();
+        float   left  = clr[0];
+        float   right = clr[1];
+
+        float x1 = (left + right) / 2f;
+        float y1 = getMeasuredHeight() - mUnderLineHeight - mTriangleHeight;
+        float x2 = x1 - mTriangleWidth / 2f;
+        float y2 = getMeasuredHeight() - mUnderLineHeight;
+        float x3 = x1 + mTriangleWidth / 2f;
+        float y3 = getMeasuredHeight() - mUnderLineHeight;
+
+        if (mTriangleStyle == TRIANGLE_STYLE_FILL)
+        {
+            drawFillTriangle(x1, y1, x2, y2, x3, y3, canvas);
+        } else
+        {
+            drawStrokeTriangle(x1, y1, x2, y2, x3, y3, canvas);
+        }
+    }
+
+    /**
+     * draw stroke style triangle
+     * @param canvas 画布
+     */
+    private void drawStrokeTriangle(float x1,
+                                    float y1,
+                                    float x2,
+                                    float y2,
+                                    float x3,
+                                    float y3,
+                                    Canvas canvas)
+    {
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(mTriangleStrokeWidth);
+
+        float x0 = 0;
+        float y0 = getMeasuredHeight() - mUnderLineHeight;
+        float x4 = mTabContainer.getMeasuredWidth();
+        float y4 = getMeasuredHeight() - mUnderLineHeight;
+
+        canvas.drawLine(x0, y0, x2, y2, mPaint);
+        canvas.drawLine(x2, y2, x1, y1, mPaint);
+        canvas.drawLine(x1, y1, x3, y3, mPaint);
+        canvas.drawLine(x3, y3, x4, y4, mPaint);
+    }
+
+    /**
+     * draw fill style triangle
+     * @param canvas 画布
+     */
+    private void drawFillTriangle(float x1,
+                                  float y1,
+                                  float x2,
+                                  float y2,
+                                  float x3,
+                                  float y3,
+                                  Canvas canvas)
+    {
+        if (mTrianglePath == null)
+        {
+            mTrianglePath = new Path();
+        }
+
+        mTrianglePath.reset();
+        mTrianglePath.moveTo(x1, y1);
+        mTrianglePath.lineTo(x2, y2);
+        mTrianglePath.lineTo(x3, y3);
+        mTrianglePath.lineTo(x1, y1);
+        mTrianglePath.close();
+
+        canvas.drawPath(mTrianglePath, mPaint);
+    }
+
+    /**
+     * draw rect
+     * @param canvas 画布
+     */
+    private void drawRect(Canvas canvas)
+    {
+        //重置画笔
+        mPaint.reset();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(mRectColor);
+        if (mRectStyle == RECT_STYLE_FILL)
+        {
+            mPaint.setStyle(Paint.Style.FILL);
+        } else
+        {
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(mRectStrokeWidth);
+        }
+
+        //计算当前的left和right
+        float[] clr   = getCurrentLeftAndRight();
+        float   left  = clr[0] + mRectPaddingLeft;
+        float   right = clr[1] - mRectPaddingRight;
+
+        float top    = mRectPaddingTop;
+        float bottom = getMeasuredHeight() - mUnderLineHeight - mRectPaddingBottom;
+        RectF rect   = new RectF(left, top, right, bottom);
+
+        canvas.drawRoundRect(rect, mRectRadius, mRectRadius, mPaint);
+    }
+
+    /**
+     * 计算当前滑动的left和right
+     * @return 获得动态的left和right，结果为float[],0为left，1为right
+     */
+    private float[] getCurrentLeftAndRight()
+    {
+        //获得当前的tab的left和right
+        View  currentTab = mTabContainer.getChildAt(mCurrentPosition);
+        float left       = currentTab.getLeft();
+        float right      = currentTab.getRight();
+
+        if (mPagerOffset > 0f && mCurrentPosition < mViewPager.getAdapter()
+                                                              .getCount() - 1)
+        {
+            //获得下一个的tab的left和right
+            View nextTab = mTabContainer.getChildAt(mCurrentPosition + 1);
+            float nextLeft = nextTab.getLeft();
+            float nextRight = nextTab.getRight();
+
+            //计算偏移后的left和right
+            left = nextLeft * mPagerOffset + (1 - mPagerOffset) * left;
+            right = nextRight * mPagerOffset + (1 - mPagerOffset) * right;
+        }
+
+        return new float[]{left,
+                           right};
+    }
+
+    /**
+     * draw underline
+     * @param canvas 画布
+     */
+    private void drawUnderLine(Canvas canvas)
+    {
+        if (mTabMode == TAB_MODE_TRIANGLE && mTriangleStyle == TRIANGLE_STYLE_STROKE)
+        {
+            return;
+        }
+
+        //重置画笔
+        mPaint.reset();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(mUnderLineColor);
+
+        float left   = 0;
+        float top    = getMeasuredHeight() - mUnderLineHeight;
+        float right  = mTabContainer.getMeasuredWidth();
+        float bottom = getMeasuredHeight();
+        canvas.drawRect(left, top, right, bottom, mPaint);
+    }
+
+    /**
+     * 设置ViewPager
+     *
+     * @param pager viewpager
+     */
+    public void setViewPager(ViewPager pager)
+    {
+        if (pager.getAdapter() == null)
+        {
+            throw new IllegalStateException("ViewPager还没有调用setAdapter()来设置数据");
+        }
+
+        //保存实例
+        this.mViewPager = pager;
+
+        //设置监听
+        if (mTabPageListener == null)
+        {
+            mTabPageListener = new TabPageListener();
+        }
+        this.mViewPager.setOnPageChangeListener(mTabPageListener);
+
+        //更新Tab的显示
+        updateTabs();
+    }
+
+    private void updateTabs()
+    {
+        //清空
+        mTabContainer.removeAllViews();
+
+        PagerAdapter adapter = mViewPager.getAdapter();
+        for (int i = 0; i < adapter.getCount(); i++)
+        {
+            CharSequence title = adapter.getPageTitle(i);
+            addTab(title, i);
+        }
+    }
+
+    /**
+     * 添加tab
+     * @param title tab显示的title
+     * @param index tab的index
+     */
+    private void addTab(CharSequence title, final int index)
+    {
+        TextView tab = new TextView(getContext());
+        tab.setText(title);
+        tab.setGravity(Gravity.CENTER);
+        tab.setPadding(mTabPaddingLeft, mTabPaddingTop, mTabPaddingRight, mTabPaddingBottom);
+        tab.setBackgroundResource(mTabBackground);
+        tab.setTextColor(getResources().getColorStateList(mTabTextColor));
+        tab.setTextSize(mTabTextSize);
+        tab.getPaint()
+           .setFakeBoldText(mTabTextBlod);
+        tab.setSelected(index == 0);//设置默认
+        tab.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (index == mViewPager.getCurrentItem())
+                {
+                    return;
+                }
+                mViewPager.setCurrentItem(index);
+            }
+        });
+
+        mTabContainer.addView(tab, index, getTabLayoutParam());
+    }
+
+    private LinearLayout.LayoutParams getTabLayoutParam()
+    {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+                                                                         LayoutParams.WRAP_CONTENT);
+
+        params.bottomMargin = mUnderLineHeight;
+        return params;
+    }
+
+    private void scrollTabs()
+    {
+        View view = mTabContainer.getChildAt(mCurrentPosition);
+        int  endX = (int) (view.getMeasuredWidth() * mPagerOffset + view.getLeft() + 0.5f);
+        scrollTo(endX, 0);
+    }
+
+    /**
+     * Page 改变的监听器
+     */
+    private class TabPageListener
+            implements ViewPager.OnPageChangeListener
+    {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+        {
+            //存储position,offset
+            mCurrentPosition = position;
+            mPagerOffset = positionOffset;
+
+            //滚动
+            scrollTabs();
+
+            //触发绘制
+            invalidate();
+        }
+
+        @Override
+        public void onPageSelected(int position)
+        {
+            int count = mTabContainer.getChildCount();
+            for (int i = 0; i < count; i++)
+            {
+                View view = mTabContainer.getChildAt(i);
+                view.setSelected(i == position);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state)
+        {
+
+        }
+    }
+}
