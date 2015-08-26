@@ -1,6 +1,7 @@
 package org.itheima.tabindicator.library;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,6 +33,10 @@ public class TabIndicator
     public final static int TAB_MODE_TRIANGLE = 1;
     public final static int TAB_MODE_RECT     = 2;
 
+    // ######## line 模式下的样式常量
+    public final static int LINE_STYLE_MATCH = 0;
+    public final static int LINE_STYLE_WRAP  = 1;
+
     // ######## rect 模式下的样式常量
     public final static int RECT_STYLE_FILL   = 0;
     public final static int RECT_STYLE_STROKE = 1;
@@ -45,38 +50,39 @@ public class TabIndicator
     private TabPageListener mTabPageListener = null;//页面的监听器
 
     // ################### TAB 通用的属性 ################################
-    private int     mTabPaddingLeft   = 15;
-    private int     mTabPaddingRight  = 15;
-    private int     mTabPaddingTop    = 12;
-    private int     mTabPaddingBottom = 12;
+    private float   mTabPaddingLeft   = 15;
+    private float   mTabPaddingRight  = 15;
+    private float   mTabPaddingTop    = 12;
+    private float   mTabPaddingBottom = 12;
     private int     mTabBackground    = R.drawable.tab_bg_selector;
     private int     mTabTextColor     = R.color.tab_textcolor_selector;
-    private int     mTabTextSize      = 18;
+    private float   mTabTextSize      = 18;
     private boolean mTabTextBlod      = false;
-    private int     mUnderLineHeight  = 2;
+    private float   mUnderLineHeight  = 2;
     private int     mUnderLineColor   = Color.BLACK;
     private int     mTabMode          = TAB_MODE_TRIANGLE;
 
     // ################## TAB line模式下的属性 ###########################
-    private int mLineHeight = 8;
-    private int mLineColor  = Color.BLUE;
+    private float mLineHeight = 8;
+    private int   mLineColor  = Color.BLUE;
+    private int   mLineStyle  = LINE_STYLE_MATCH;
 
     // ################## TAB triangle模式下的属性 #######################
-    private int mTriangleHeight      = 8;
-    private int mTriangleWidth       = 20;
-    private int mTriangleColor       = Color.BLUE;
-    private int mTriangleStyle       = TRIANGLE_STYLE_STROKE;
-    private int mTriangleStrokeWidth = 2;
+    private float mTriangleHeight      = 8;
+    private float mTriangleWidth       = 20;
+    private int   mTriangleColor       = Color.BLUE;
+    private int   mTriangleStyle       = TRIANGLE_STYLE_FILL;
+    private float mTriangleStrokeWidth = 2;
 
     // ################## TAB rect模式下的属性 ###########################
-    private int mRectPaddingLeft   = 8;
-    private int mRectPaddingTop    = 8;
-    private int mRectPaddingRight  = 8;
-    private int mRectPaddingBottom = 8;
-    private int mRectColor         = Color.GREEN;
-    private int mRectRadius        = 10;
-    private int mRectStyle         = RECT_STYLE_STROKE;
-    private int mRectStrokeWidth   = 2;
+    private float mRectPaddingLeft   = 8;
+    private float mRectPaddingTop    = 8;
+    private float mRectPaddingRight  = 8;
+    private float mRectPaddingBottom = 8;
+    private int   mRectColor         = Color.GREEN;
+    private float mRectRadius        = 10;
+    private int   mRectStyle         = RECT_STYLE_FILL;
+    private float mRectStrokeWidth   = 2;
 
     private Paint mPaint        = new Paint();
     private Path  mTrianglePath = null;
@@ -105,6 +111,60 @@ public class TabIndicator
         mTabContainer.setOrientation(LinearLayout.HORIZONTAL);
         //        mTabContainer.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         addView(mTabContainer);
+
+        //初始化自定义属性
+        initAttrs(attrs);
+    }
+
+    private void initAttrs(AttributeSet set)
+    {
+        TypedArray ta = getContext().obtainStyledAttributes(set, R.styleable.TabIndicator);
+
+        //通用的属性获取
+        mTabPaddingLeft = ta.getDimension(R.styleable.TabIndicator_tabPaddingLeft, mTabPaddingLeft);
+        mTabPaddingTop = ta.getDimension(R.styleable.TabIndicator_tabPaddingTop, mTabPaddingTop);
+        mTabPaddingRight = ta.getDimension(R.styleable.TabIndicator_tabPaddingRight,
+                                           mTabPaddingRight);
+        mTabPaddingBottom = ta.getDimension(R.styleable.TabIndicator_tabPaddingBottom,
+                                            mTabPaddingBottom);
+
+        mTabBackground = ta.getResourceId(R.styleable.TabIndicator_tabBackground, mTabBackground);
+        mTabTextColor = ta.getResourceId(R.styleable.TabIndicator_tabTextColor, mTabTextColor);
+        mTabTextSize = ta.getDimension(R.styleable.TabIndicator_tabTextSize, mTabTextSize);
+        mTabTextBlod = ta.getBoolean(R.styleable.TabIndicator_tabTextBlod, mTabTextBlod);
+
+        mUnderLineHeight = ta.getDimension(R.styleable.TabIndicator_underLineHeight,
+                                           mUnderLineHeight);
+        mUnderLineColor = ta.getColor(R.styleable.TabIndicator_underLineColor, mUnderLineColor);
+
+        mTabMode = ta.getInt(R.styleable.TabIndicator_tabMode, mTabMode);
+
+        mLineHeight = ta.getDimension(R.styleable.TabIndicator_lineHeight, mLineHeight);
+        mLineColor = ta.getColor(R.styleable.TabIndicator_lineColor, mLineColor);
+        mLineStyle = ta.getInt(R.styleable.TabIndicator_lineStyle, mLineStyle);
+
+        mTriangleHeight = ta.getDimension(R.styleable.TabIndicator_triangleHeight, mTriangleHeight);
+        mTriangleWidth = ta.getDimension(R.styleable.TabIndicator_triangleHeight, mTriangleWidth);
+        mTriangleColor = ta.getColor(R.styleable.TabIndicator_triangleColor, mTriangleColor);
+        mTriangleStyle = ta.getInt(R.styleable.TabIndicator_triangleStyle, mTriangleStyle);
+        mTriangleStrokeWidth = ta.getDimension(R.styleable.TabIndicator_triangleStrokeWidth,
+                                               mTriangleStrokeWidth);
+
+        mRectPaddingLeft = ta.getDimension(R.styleable.TabIndicator_rectPaddingLeft,
+                                           mRectPaddingLeft);
+        mRectPaddingTop = ta.getDimension(R.styleable.TabIndicator_rectPaddingLeft,
+                                          mRectPaddingTop);
+        mRectPaddingRight = ta.getDimension(R.styleable.TabIndicator_rectPaddingLeft,
+                                            mRectPaddingRight);
+        mRectPaddingBottom = ta.getDimension(R.styleable.TabIndicator_rectPaddingLeft,
+                                             mRectPaddingBottom);
+        mRectColor = ta.getColor(R.styleable.TabIndicator_rectColor, mRectColor);
+        mRectRadius = ta.getDimension(R.styleable.TabIndicator_rectRadius, mRectRadius);
+        mRectStyle = ta.getInt(R.styleable.TabIndicator_rectStyle, mRectStyle);
+        mRectStrokeWidth = ta.getDimension(R.styleable.TabIndicator_rectStrokeWidth,
+                                           mRectStrokeWidth);
+
+        ta.recycle();
     }
 
     @Override
@@ -150,6 +210,12 @@ public class TabIndicator
         float[] clr   = getCurrentLeftAndRight();
         float   left  = clr[0];
         float   right = clr[1];
+
+        if (mLineStyle == LINE_STYLE_WRAP)
+        {
+            left += mTabPaddingLeft;
+            right -= mTabPaddingRight;
+        }
 
         float top    = getMeasuredHeight() - mUnderLineHeight - mLineHeight;
         float bottom = getMeasuredHeight() - mUnderLineHeight;
@@ -372,7 +438,10 @@ public class TabIndicator
         TextView tab = new TextView(getContext());
         tab.setText(title);
         tab.setGravity(Gravity.CENTER);
-        tab.setPadding(mTabPaddingLeft, mTabPaddingTop, mTabPaddingRight, mTabPaddingBottom);
+        tab.setPadding((int) mTabPaddingLeft,
+                       (int) mTabPaddingTop,
+                       (int) mTabPaddingRight,
+                       (int) mTabPaddingBottom);
         tab.setBackgroundResource(mTabBackground);
         tab.setTextColor(getResources().getColorStateList(mTabTextColor));
         tab.setTextSize(mTabTextSize);
@@ -400,7 +469,7 @@ public class TabIndicator
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
                                                                          LayoutParams.WRAP_CONTENT);
 
-        params.bottomMargin = mUnderLineHeight;
+        params.bottomMargin = (int) (mUnderLineHeight + 0.5f);
         return params;
     }
 
@@ -410,6 +479,23 @@ public class TabIndicator
         int  endX = (int) (view.getMeasuredWidth() * mPagerOffset + view.getLeft() + 0.5f);
         scrollTo(endX, 0);
     }
+
+    /**
+     * set tab padding
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     */
+    public void setTabPadding(int left, int top, int right, int bottom)
+    {
+        this.mTabPaddingLeft = left;
+        this.mTabPaddingTop = top;
+        this.mTabPaddingRight = right;
+        this.mTabPaddingBottom = bottom;
+    }
+
+
 
     /**
      * Page 改变的监听器
