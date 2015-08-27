@@ -59,7 +59,7 @@ public class TabIndicator
     private float   mTabTextSize      = 18;
     private boolean mTabTextBlod      = false;
     private float   mUnderLineHeight  = 2;
-    private int     mUnderLineColor   = Color.BLACK;
+    private int     mUnderLineColor   = Color.parseColor("#33000000");
     private int     mTabMode          = TAB_MODE_TRIANGLE;
 
     // ################## TAB line模式下的属性 ###########################
@@ -495,7 +495,44 @@ public class TabIndicator
         this.mTabPaddingBottom = bottom;
     }
 
+    public void setTabBackground(int resId)
+    {
+        this.mTabBackground = resId;
+    }
 
+    public void setTabTextColor(int resId)
+    {
+        this.mTabTextColor = resId;
+    }
+
+    public void setTabTextSize(float size)
+    {
+        this.mTabTextSize = size;
+    }
+
+    public void setTabTextBlod(boolean blod)
+    {
+        this.mTabTextBlod = blod;
+    }
+
+    public void setUnderLineHeight(float underLineHeight)
+    {
+        this.mUnderLineHeight = underLineHeight;
+    }
+
+    public void setUnderLineColor(int underLineColor)
+    {
+        this.mUnderLineColor = underLineColor;
+    }
+
+    public void setTabMode(int tabMode)
+    {
+        if (tabMode != TAB_MODE_LINE && tabMode != TAB_MODE_RECT && tabMode != TAB_MODE_TRIANGLE)
+        {
+            tabMode = TAB_MODE_LINE;
+        }
+        this.mTabMode = tabMode;
+    }
 
     /**
      * Page 改变的监听器

@@ -1,5 +1,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:itheima="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,8 +9,12 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        itheima:tabMode="triangle"
+        itheima:triangleHeight="8dp"
+        itheima:triangleStrokeWidth="1dp"
+        itheima:triangleStyle="stroke"
+        itheima:triangleWidth="10dp"
+        />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_sample_list">TabIndicator</string>
+
+    <string name="title_activity_line">Line Mode</string>
+    <string name="title_activity_triangle">Triangle Mode</string>
+    <string name="title_activity_rect">Rect Mode</string>
 </resources>
