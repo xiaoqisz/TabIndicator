@@ -63,14 +63,14 @@ public class TabIndicator
     private int     mTabMode          = TAB_MODE_TRIANGLE;
 
     // ################## TAB line模式下的属性 ###########################
-    private float mLineHeight = 8;
+    private float mLineHeight = 5;
     private int   mLineColor  = Color.BLUE;
     private int   mLineStyle  = LINE_STYLE_MATCH;
 
     // ################## TAB triangle模式下的属性 #######################
     private float mTriangleHeight      = 8;
     private float mTriangleWidth       = 20;
-    private int   mTriangleColor       = Color.BLUE;
+    private int   mTriangleColor       = Color.TRANSPARENT;
     private int   mTriangleStyle       = TRIANGLE_STYLE_FILL;
     private float mTriangleStrokeWidth = 2;
 
@@ -85,12 +85,13 @@ public class TabIndicator
     private int   mRectStrokeColor   = Color.TRANSPARENT;
     private float mRectStrokeWidth   = 0;
 
-    private Paint mPaint        = new Paint();
-    private Path  mTrianglePath = null;
+    private Paint            mPaint        = new Paint();
+    private Path             mTrianglePath = null;
+    private GradientDrawable mRectDrawable = null;
 
     private float mPagerOffset     = 0f;
     private int   mCurrentPosition = 0;
-    private GradientDrawable mRectDrawable;
+
 
     public TabIndicator(Context context)
     {
@@ -531,6 +532,98 @@ public class TabIndicator
             tabMode = TAB_MODE_LINE;
         }
         this.mTabMode = tabMode;
+    }
+
+    public void setLineHeight(float lineHeight)
+    {
+        this.mLineHeight = lineHeight;
+    }
+
+    public void setLineColor(int lineColor)
+    {
+        this.mLineColor = lineColor;
+    }
+
+    public void setLineStyle(int lineStyle)
+    {
+        if (lineStyle == LINE_STYLE_MATCH)
+        {
+            this.mLineStyle = lineStyle;
+        } else
+        {
+            this.mLineStyle = LINE_STYLE_WRAP;
+        }
+    }
+
+    public void setTriangleHeight(float triangleHeight)
+    {
+        this.mTriangleHeight = triangleHeight;
+    }
+
+    public void setTriangleWidth(float triangleWidth)
+    {
+        this.mTriangleWidth = triangleWidth;
+    }
+
+    public void setTriangleColor(int triangleColor)
+    {
+        this.mTriangleColor = triangleColor;
+    }
+
+    public void setTriangleStyle(int triangleStyle)
+    {
+        if (triangleStyle == TRIANGLE_STYLE_FILL)
+        {
+            this.mTriangleStyle = triangleStyle;
+        } else
+        {
+            this.mTriangleStyle = TRIANGLE_STYLE_STROKE;
+        }
+    }
+
+    public void setRectPadding(float left, float top, float right, float bottom)
+    {
+        this.mRectPaddingLeft = left;
+        this.mRectPaddingTop = top;
+        this.mRectPaddingRight = right;
+        this.mRectPaddingBottom = bottom;
+    }
+
+    public void setRectColor(int color)
+    {
+        this.mRectColor = color;
+    }
+
+    public void setRectRadius(float radius)
+    {
+        this.mRectRadius = radius;
+    }
+
+    public void setRectStyle(int style)
+    {
+        if (style == RECT_STYLE_FILL)
+        {
+            this.mRectStyle = style;
+        } else
+        {
+            this.mRectStyle = RECT_STYLE_STROKE;
+        }
+    }
+
+    public void setRectStrokeColor(int color)
+    {
+        this.mRectStrokeColor = color;
+    }
+
+    public void setRectStrokeWidth(float width)
+    {
+        this.mRectStrokeWidth = width;
+    }
+
+
+    public void setTriangleStrokeWidth(float triangleStrokeWidth)
+    {
+        this.mTriangleStrokeWidth = triangleStrokeWidth;
     }
 
     /**
