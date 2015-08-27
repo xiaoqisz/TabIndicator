@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.RectF;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -79,16 +79,18 @@ public class TabIndicator
     private float mRectPaddingTop    = 8;
     private float mRectPaddingRight  = 8;
     private float mRectPaddingBottom = 8;
-    private int   mRectColor         = Color.GREEN;
-    private float mRectRadius        = 10;
+    private int   mRectColor         = Color.TRANSPARENT;
+    private float mRectRadius        = 0;
     private int   mRectStyle         = RECT_STYLE_FILL;
-    private float mRectStrokeWidth   = 2;
+    private int   mRectStrokeColor   = Color.TRANSPARENT;
+    private float mRectStrokeWidth   = 0;
 
     private Paint mPaint        = new Paint();
     private Path  mTrianglePath = null;
 
     private float mPagerOffset     = 0f;
     private int   mCurrentPosition = 0;
+    private GradientDrawable mRectDrawable;
 
     public TabIndicator(Context context)
     {
@@ -163,6 +165,7 @@ public class TabIndicator
         mRectStyle = ta.getInt(R.styleable.TabIndicator_rectStyle, mRectStyle);
         mRectStrokeWidth = ta.getDimension(R.styleable.TabIndicator_rectStrokeWidth,
                                            mRectStrokeWidth);
+        mRectStrokeColor = ta.getColor(R.styleable.TabIndicator_rectStrokeColor, mRectStrokeColor);
 
         ta.recycle();
     }
@@ -313,19 +316,6 @@ public class TabIndicator
      */
     private void drawRect(Canvas canvas)
     {
-        //重置画笔
-        mPaint.reset();
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(mRectColor);
-        if (mRectStyle == RECT_STYLE_FILL)
-        {
-            mPaint.setStyle(Paint.Style.FILL);
-        } else
-        {
-            mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeWidth(mRectStrokeWidth);
-        }
-
         //计算当前的left和right
         float[] clr   = getCurrentLeftAndRight();
         float   left  = clr[0] + mRectPaddingLeft;
@@ -333,9 +323,18 @@ public class TabIndicator
 
         float top    = mRectPaddingTop;
         float bottom = getMeasuredHeight() - mUnderLineHeight - mRectPaddingBottom;
-        RectF rect   = new RectF(left, top, right, bottom);
 
-        canvas.drawRoundRect(rect, mRectRadius, mRectRadius, mPaint);
+        if (mRectDrawable == null)
+        {
+            mRectDrawable = new GradientDrawable();
+        }
+        mRectDrawable.setShape(GradientDrawable.RECTANGLE);
+        mRectDrawable.setColor(mRectColor);
+        mRectDrawable.setCornerRadius(mRectRadius);
+        mRectDrawable.setStroke((int) mRectStrokeWidth, mRectStrokeColor);
+        mRectDrawable.setBounds((int) left, (int) top, (int) right, (int) bottom);
+
+        mRectDrawable.draw(canvas);
     }
 
     /**

@@ -51,6 +51,6 @@
             <enum name="stroke" value="1"/>
         </attr>
         <attr name="rectStrokeWidth" format="dimension"/>
-
+        <attr name="rectStrokeColor" format="color"/>
     </declare-styleable>
 </resources>
