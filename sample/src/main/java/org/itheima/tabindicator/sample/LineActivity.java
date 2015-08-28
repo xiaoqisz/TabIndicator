@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,6 +44,33 @@ public class LineActivity
 
         //设置viewpager
         mIndicator.setViewPager(mPager);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_line, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.line_action_style_match:
+                item.setChecked(true);
+                mIndicator.setLineStyle(TabIndicator.LINE_STYLE_MATCH);
+                break;
+            case R.id.line_action_style_wrap:
+                item.setChecked(true);
+                mIndicator.setLineStyle(TabIndicator.LINE_STYLE_WRAP);
+                break;
+            case R.id.line_action_color:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class MainPagerAdapter

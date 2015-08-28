@@ -16,6 +16,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
 /*
  *  @项目名：  TabIndicator 
  *  @包名：    org.itheima.tabindicator.library
@@ -91,6 +95,8 @@ public class TabIndicator
 
     private float mPagerOffset     = 0f;
     private int   mCurrentPosition = 0;
+
+    private List<ViewPager.OnPageChangeListener> mListeners = new LinkedList<ViewPager.OnPageChangeListener>();
 
 
     public TabIndicator(Context context)
@@ -415,6 +421,72 @@ public class TabIndicator
         updateTabs();
     }
 
+    /**
+     * add listener
+     * @param listener
+     */
+    public void addOnPageChangeListener(ViewPager.OnPageChangeListener listener)
+    {
+        if (!mListeners.contains(listener))
+        {
+            mListeners.add(listener);
+        }
+    }
+
+    /**
+     * remove listener
+     * @param listener
+     */
+    public void removeOnPageChangeListener(ViewPager.OnPageChangeListener listener)
+    {
+        mListeners.remove(listener);
+    }
+
+    private void notifyOnPageSelected(int position)
+    {
+        ListIterator<ViewPager.OnPageChangeListener> iterator = mListeners.listIterator();
+        while (iterator.hasNext())
+        {
+            ViewPager.OnPageChangeListener next = iterator.next();
+
+            if (next != null)
+            {
+                next.onPageSelected(position);
+            }
+        }
+    }
+
+    private void notifyOnPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+    {
+        ListIterator<ViewPager.OnPageChangeListener> iterator = mListeners.listIterator();
+        while (iterator.hasNext())
+        {
+            ViewPager.OnPageChangeListener next = iterator.next();
+
+            if (next != null)
+            {
+                next.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+        }
+    }
+
+    private void notifyOnPageScrollStateChanged(int state)
+    {
+        ListIterator<ViewPager.OnPageChangeListener> iterator = mListeners.listIterator();
+        while (iterator.hasNext())
+        {
+            ViewPager.OnPageChangeListener next = iterator.next();
+
+            if (next != null)
+            {
+                next.onPageScrollStateChanged(state);
+            }
+        }
+    }
+
+    /**
+     * update tabs
+     */
     private void updateTabs()
     {
         //清空
@@ -553,6 +625,7 @@ public class TabIndicator
         {
             this.mLineStyle = LINE_STYLE_WRAP;
         }
+        invalidate();
     }
 
     public void setTriangleHeight(float triangleHeight)
@@ -645,6 +718,9 @@ public class TabIndicator
 
             //触发绘制
             invalidate();
+
+            // notify
+            notifyOnPageScrolled(position, positionOffset, positionOffsetPixels);
         }
 
         @Override
@@ -656,12 +732,16 @@ public class TabIndicator
                 View view = mTabContainer.getChildAt(i);
                 view.setSelected(i == position);
             }
+
+            // notify
+            notifyOnPageSelected(position);
         }
 
         @Override
         public void onPageScrollStateChanged(int state)
         {
-
+            // notify
+            notifyOnPageScrollStateChanged(state);
         }
     }
 }

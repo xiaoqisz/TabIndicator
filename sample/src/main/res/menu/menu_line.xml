@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/line_action_style"
+          android:orderInCategory="100"
+          android:title="Line Style"
+          app:showAsAction="never">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/line_action_style_match"
+                    android:title="match style"
+                    />
+                <item
+                    android:id="@+id/line_action_style_wrap"
+                    android:title="wrap style"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:id="@+id/line_action_color"
+          android:orderInCategory="100"
+          android:title="Line Color"
+          app:showAsAction="never"></item>
+</menu>
