@@ -1,25 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/line_action_style"
+    <item android:id="@+id/triangle_action_style"
           android:orderInCategory="100"
-          android:title="Line Style"
+          android:title="Triangle Style"
           app:showAsAction="never">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/line_action_style_match"
-                    android:title="Match style"
+                    android:id="@+id/triangle_action_style_fill"
+                    android:title="Fill style"
                     />
                 <item
-                    android:id="@+id/line_action_style_wrap"
-                    android:title="Wrap style"/>
+                    android:id="@+id/triangle_action_style_stroke"
+                    android:title="Stroke style"/>
             </group>
         </menu>
     </item>
 
-    <item android:id="@+id/line_action_color"
+    <item android:id="@+id/triangle_action_color"
           android:orderInCategory="100"
-          android:title="Line Color"
+          android:title="Triangle Color"
           app:showAsAction="never"></item>
 </menu>

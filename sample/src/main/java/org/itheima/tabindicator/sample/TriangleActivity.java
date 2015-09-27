@@ -5,6 +5,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,6 +45,67 @@ public class TriangleActivity
         //设置viewpager
         mIndicator.setViewPager(mPager);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_triangle, menu);
+
+        MenuItem triangleMatchItem = menu.findItem(R.id.triangle_action_style_fill);
+        MenuItem triangleWrapItem  = menu.findItem(R.id.triangle_action_style_stroke);
+        int      triangleStyle     = mIndicator.getTriangleStyle();
+        switch (triangleStyle)
+        {
+            case TabIndicator.TRIANGLE_STYLE_FILL:
+                triangleMatchItem.setChecked(true);
+                break;
+            case TabIndicator.TRIANGLE_STYLE_STROKE:
+                triangleWrapItem.setChecked(true);
+                break;
+            default:
+                break;
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.triangle_action_style_fill:
+                item.setChecked(true);
+                mIndicator.setTriangleStyle(TabIndicator.TRIANGLE_STYLE_FILL);
+                break;
+            case R.id.triangle_action_style_stroke:
+                item.setChecked(true);
+                mIndicator.setTriangleStyle(TabIndicator.TRIANGLE_STYLE_STROKE);
+                break;
+            case R.id.triangle_action_color:
+                choiceColor();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void choiceColor()
+    {
+        ColorDialog dialog    = new ColorDialog(this);
+        int         lineColor = mIndicator.getLineColor();
+        dialog.setColor(lineColor);
+        dialog.setOnColorChangedListener(new ColorDialog.OnColorChangedListener()
+        {
+            @Override
+            public void onColorChanged(int color)
+            {
+                mIndicator.setTriangleColor(color);
+            }
+        });
+
+        dialog.show();
+    }
+
 
     private class MainPagerAdapter
             extends PagerAdapter

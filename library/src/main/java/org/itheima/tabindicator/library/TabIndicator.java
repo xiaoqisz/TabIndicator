@@ -687,16 +687,30 @@ public class TabIndicator
     public void setTriangleHeight(float triangleHeight)
     {
         this.mTriangleHeight = triangleHeight;
+        invalidate();
     }
 
     public void setTriangleWidth(float triangleWidth)
     {
         this.mTriangleWidth = triangleWidth;
+        invalidate();
     }
 
     public void setTriangleColor(int triangleColor)
     {
         this.mTriangleColor = triangleColor;
+        invalidate();
+    }
+
+    /**
+     *
+     * @return
+     * @see {@link TRIANGLE_STYLE_FILL}
+     * @see {@link TRIANGLE_STYLE_STROKE}
+     */
+    public int getTriangleStyle()
+    {
+        return mTriangleStyle;
     }
 
     public void setTriangleStyle(int triangleStyle)
@@ -708,6 +722,7 @@ public class TabIndicator
         {
             this.mTriangleStyle = TRIANGLE_STYLE_STROKE;
         }
+        invalidate();
     }
 
     public void setRectPadding(float left, float top, float right, float bottom)

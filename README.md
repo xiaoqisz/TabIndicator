@@ -1,3 +1,6 @@
-# TabIndicator
+# __Android TabIndicator__
 
-##Introduction
+__TabIndicator is an Open Source Android library.__
+
+
+![line mode](art/line.gif)
