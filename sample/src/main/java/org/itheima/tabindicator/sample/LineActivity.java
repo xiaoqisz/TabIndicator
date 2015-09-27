@@ -44,12 +44,50 @@ public class LineActivity
 
         //设置viewpager
         mIndicator.setViewPager(mPager);
+
+        //设置Viewpager滑动监听监听(注意)
+        mIndicator.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state)
+            {
+
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_line, menu);
+
+        MenuItem lineMatchItem = menu.findItem(R.id.line_action_style_match);
+        MenuItem lineWrapItem  = menu.findItem(R.id.line_action_style_wrap);
+        int      lineStyle     = mIndicator.getLineStyle();
+        switch (lineStyle)
+        {
+            case TabIndicator.LINE_STYLE_MATCH:
+                lineMatchItem.setChecked(true);
+                break;
+            case TabIndicator.LINE_STYLE_WRAP:
+                lineWrapItem.setChecked(true);
+                break;
+            default:
+                break;
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -67,10 +105,27 @@ public class LineActivity
                 mIndicator.setLineStyle(TabIndicator.LINE_STYLE_WRAP);
                 break;
             case R.id.line_action_color:
+                choiceColor();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void choiceColor()
+    {
+        ColorDialog dialog    = new ColorDialog(this);
+        int         lineColor = mIndicator.getLineColor();
+        dialog.setColor(lineColor);
+        dialog.setOnColorChangedListener(new ColorDialog.OnColorChangedListener()
+        {
+            @Override
+            public void onColorChanged(int color)
+            {
+                mIndicator.setLineColor(color);
+            }
+        });
+
+        dialog.show();
     }
 
     private class MainPagerAdapter

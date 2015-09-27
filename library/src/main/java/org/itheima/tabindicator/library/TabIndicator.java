@@ -32,16 +32,16 @@ public class TabIndicator
 {
     public final static String TAG = "TabIndicator";
 
-    // ######## Tab 的模式常量
+    // ######## Tab 的模式常量 ############
     public final static int TAB_MODE_LINE     = 0;
     public final static int TAB_MODE_TRIANGLE = 1;
     public final static int TAB_MODE_RECT     = 2;
 
-    // ######## line 模式下的样式常量
+    // ######## line 模式下的样式常量 ############
     public final static int LINE_STYLE_MATCH = 0;
     public final static int LINE_STYLE_WRAP  = 1;
 
-    // ######## rect 模式下的样式常量
+    // ######## rect 模式下的样式常量 ############
     public final static int RECT_STYLE_FILL   = 0;
     public final static int RECT_STYLE_STROKE = 1;
 
@@ -96,7 +96,15 @@ public class TabIndicator
     private float mPagerOffset     = 0f;
     private int   mCurrentPosition = 0;
 
+    /**
+     * 观察者集合
+     */
     private List<ViewPager.OnPageChangeListener> mListeners = new LinkedList<ViewPager.OnPageChangeListener>();
+
+    /**
+     * viewpager的监听器
+     */
+    private ViewPager.OnPageChangeListener mListener;
 
 
     public TabIndicator(Context context)
@@ -153,7 +161,7 @@ public class TabIndicator
         mLineStyle = ta.getInt(R.styleable.TabIndicator_lineStyle, mLineStyle);
 
         mTriangleHeight = ta.getDimension(R.styleable.TabIndicator_triangleHeight, mTriangleHeight);
-        mTriangleWidth = ta.getDimension(R.styleable.TabIndicator_triangleHeight, mTriangleWidth);
+        mTriangleWidth = ta.getDimension(R.styleable.TabIndicator_triangleWidth, mTriangleWidth);
         mTriangleColor = ta.getColor(R.styleable.TabIndicator_triangleColor, mTriangleColor);
         mTriangleStyle = ta.getInt(R.styleable.TabIndicator_triangleStyle, mTriangleStyle);
         mTriangleStrokeWidth = ta.getDimension(R.styleable.TabIndicator_triangleStrokeWidth,
@@ -422,6 +430,15 @@ public class TabIndicator
     }
 
     /**
+     * 设置viewpager的滑动监听
+     * @param listener
+     */
+    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener)
+    {
+        this.mListener = listener;
+    }
+
+    /**
      * add listener
      * @param listener
      */
@@ -454,6 +471,12 @@ public class TabIndicator
                 next.onPageSelected(position);
             }
         }
+
+        //通知listener
+        if (mListener != null)
+        {
+            mListener.onPageSelected(position);
+        }
     }
 
     private void notifyOnPageScrolled(int position, float positionOffset, int positionOffsetPixels)
@@ -468,6 +491,12 @@ public class TabIndicator
                 next.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
         }
+
+        //通知listener
+        if (mListener != null)
+        {
+            mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        }
     }
 
     private void notifyOnPageScrollStateChanged(int state)
@@ -481,6 +510,12 @@ public class TabIndicator
             {
                 next.onPageScrollStateChanged(state);
             }
+        }
+
+        //通知listener
+        if (mListener != null)
+        {
+            mListener.onPageScrollStateChanged(state);
         }
     }
 
@@ -611,9 +646,30 @@ public class TabIndicator
         this.mLineHeight = lineHeight;
     }
 
+    /**
+     *
+     * @return line color
+     */
+    public int getLineColor()
+    {
+        return mLineColor;
+    }
+
     public void setLineColor(int lineColor)
     {
         this.mLineColor = lineColor;
+        invalidate();
+    }
+
+    /**
+     *
+     * @return line style
+     * @see {@link LINE_STYLE_MATCH}
+     * @see {@link LINE_STYLE_WRAP}
+     */
+    public int getLineStyle()
+    {
+        return mLineStyle;
     }
 
     public void setLineStyle(int lineStyle)

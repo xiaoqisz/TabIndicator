@@ -13,7 +13,8 @@
         itheima:triangleHeight="8dp"
         itheima:triangleStrokeWidth="1dp"
         itheima:triangleStyle="stroke"
-        itheima:triangleWidth="10dp"
+        itheima:triangleColor="#ff0000"
+        itheima:triangleWidth="12dp"
         />
 
     <android.support.v4.view.ViewPager

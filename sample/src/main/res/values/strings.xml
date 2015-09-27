@@ -5,7 +5,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_sample_list">TabIndicator</string>
 
+    <!-- Activity -->
     <string name="title_activity_line">Line Mode</string>
     <string name="title_activity_triangle">Triangle Mode</string>
     <string name="title_activity_rect">Rect Mode</string>
+
+    <!-- Dialog color -->
+    <string name="dialog_color_title">Set Color</string>
 </resources>
