@@ -48,4 +48,69 @@ For a working implementation of this project see the __`sample/`__ folder.
     indicator.addOnPageChangeListener(listener);
     ```
     
+## Documentation
 
+* __custom Attributions__
+    ```xml
+    <attr name="tabPaddingLeft" format="dimension"/>
+    <attr name="tabPaddingRight" format="dimension"/>
+    <attr name="tabPaddingTop" format="dimension"/>
+    <attr name="tabPaddingBottom" format="dimension"/>
+    
+    <attr name="tabBackground" format="reference"/>
+    <attr name="tabTextColor" format="reference|color"/> 
+    <attr name="tabTextSize" format="dimension"/>
+    <attr name="tabTextBlod" format="boolean"/>
+    
+    <attr name="underLineHeight" format="dimension"/>
+    <attr name="underLineColor" format="color"/>
+    
+    <!-- tab indicator mode -->
+    <attr name="tabMode" format="enum">
+        <enum name="line" value="0"/>
+        <enum name="triangle" value="1"/>
+        <enum name="rect" value="2"/>
+    </attr>
+    
+    <!-- line mode attrs -->
+    <attr name="lineHeight" format="dimension"/>
+    <attr name="lineColor" format="color"/>
+    <attr name="lineStyle" format="enum">
+       <enum name="match" value="0"/>
+       <enum name="wrap" value="1"/>
+    </attr>
+    
+    <!-- triangle mode attrs -->
+    <attr name="triangleHeight" format="dimension"/>
+    <attr name="triangleWidth" format="dimension"/>
+    <attr name="triangleColor" format="color"/>
+    <attr name="triangleStyle" format="enum">
+       <enum name="fill" value="0"/>
+       <enum name="stroke" value="1"/>
+    </attr>
+    <attr name="triangleStrokeWidth" format="dimension"/>
+    
+    <!-- rect mode attrs -->
+    <attr name="rectPaddingLeft" format="dimension"/>
+    <attr name="rectPaddingTop" format="dimension"/>
+    <attr name="rectPaddingRight" format="dimension"/>
+    <attr name="rectPaddingBottom" format="dimension"/>
+    <attr name="rectColor" format="color"/>
+    <attr name="rectRadius" format="dimension"/>
+    <attr name="rectStyle" format="enum">
+       <enum name="fill" value="0"/>
+       <enum name="stroke" value="1"/>
+    </attr>
+    <attr name="rectStrokeWidth" format="dimension"/>
+    <attr name="rectStrokeColor" format="color"/>    
+    ```
+
+* __Tab Mode__
+	```xml
+	<!-- tab indicator mode -->
+  	<attr name="tabMode" format="enum">
+      	<enum name="line" value="0"/>
+      	<enum name="triangle" value="1"/>
+      	<enum name="rect" value="2"/>
+  	</attr>
+	```
