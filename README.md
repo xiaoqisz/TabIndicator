@@ -3,4 +3,5 @@
 __TabIndicator is an Open Source Android library.__
 
 
-![line mode](art/line.gif)
+![line](art/line.gif) _
+![triangel](art/triangle.gif)
