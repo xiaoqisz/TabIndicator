@@ -38,12 +38,12 @@ For a working implementation of this project see the __`sample/`__ folder.
 
 * (Optional) If you use an OnPageChangeListener with your view pager,
 
-> solution 1:
+  > solution 1:
     ```
     indicator.setOnPageChangeListener(listener);
     ```
 
-> solution 2:
+  > solution 2:
     ```
     indicator.addOnPageChangeListener(listener);
     ```
