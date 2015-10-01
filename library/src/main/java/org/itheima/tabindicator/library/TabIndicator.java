@@ -343,10 +343,18 @@ public class TabIndicator
         {
             mRectDrawable = new GradientDrawable();
         }
+
         mRectDrawable.setShape(GradientDrawable.RECTANGLE);
         mRectDrawable.setColor(mRectColor);
         mRectDrawable.setCornerRadius(mRectRadius);
-        mRectDrawable.setStroke((int) mRectStrokeWidth, mRectStrokeColor);
+
+        if (mRectStyle == RECT_STYLE_STROKE)
+        {
+            mRectDrawable.setStroke((int) mRectStrokeWidth, mRectStrokeColor);
+        } else
+        {
+            mRectDrawable.setStroke((int) mRectStrokeWidth, Color.TRANSPARENT);
+        }
         mRectDrawable.setBounds((int) left, (int) top, (int) right, (int) bottom);
 
         mRectDrawable.draw(canvas);
@@ -588,6 +596,45 @@ public class TabIndicator
     }
 
     /**
+     *
+     * @return Tab padding left
+     */
+    public float getTabPaddingLeft()
+    {
+        return mTabPaddingLeft;
+    }
+
+    /**
+     *
+     * @return Tab padding top
+     */
+    public float getTabPaddingTop()
+    {
+        return mTabPaddingTop;
+    }
+
+
+    /**
+     *
+     * @return Tab padding right
+     */
+    public float getTabPaddingRight()
+    {
+        return mTabPaddingRight;
+    }
+
+
+    /**
+     *
+     * @return Tab padding Bottom
+     */
+    public float getTabPaddingBottom()
+    {
+        return mTabPaddingBottom;
+    }
+
+
+    /**
      * set tab padding
      * @param left
      * @param top
@@ -602,36 +649,109 @@ public class TabIndicator
         this.mTabPaddingBottom = bottom;
     }
 
+    /**
+     * set tab background selector
+     * @param resId
+     */
     public void setTabBackground(int resId)
     {
         this.mTabBackground = resId;
+        invalidate();
     }
 
+    /**
+     * set tab text color selector
+     * @param resId
+     */
     public void setTabTextColor(int resId)
     {
         this.mTabTextColor = resId;
     }
 
+    /**
+     * @return tab text size
+     */
+    public float getTabTextSize()
+    {
+        return mTabTextSize;
+    }
+
+    /**
+     * set tab text size
+     * @param size
+     */
     public void setTabTextSize(float size)
     {
         this.mTabTextSize = size;
+        invalidate();
     }
 
+    /**
+     * @return is tab text blod
+     */
+    public boolean isTabTextBlod()
+    {
+        return mTabTextBlod;
+    }
+
+    /**
+     * set tab text blod
+     * @param blod
+     */
     public void setTabTextBlod(boolean blod)
     {
         this.mTabTextBlod = blod;
+        invalidate();
     }
 
+    /**
+     * @return get under line height
+     */
+    public float getUnderLineHeight()
+    {
+        return mUnderLineHeight;
+    }
+
+    /**
+     * set under line height
+     * @param underLineHeight
+     */
     public void setUnderLineHeight(float underLineHeight)
     {
         this.mUnderLineHeight = underLineHeight;
+        invalidate();
     }
 
+    /**
+     * @return get under line color
+     */
+    public int getUnderLineColor()
+    {
+        return mUnderLineColor;
+    }
+
+    /**
+     * set under line color
+     * @param underLineColor
+     */
     public void setUnderLineColor(int underLineColor)
     {
         this.mUnderLineColor = underLineColor;
+        invalidate();
     }
 
+    /**
+     * @return get tab mode
+     */
+    public int getTabMode()
+    {
+        return mTabMode;
+    }
+
+    /**
+     * set tab mode
+     * @param tabMode
+     */
     public void setTabMode(int tabMode)
     {
         if (tabMode != TAB_MODE_LINE && tabMode != TAB_MODE_RECT && tabMode != TAB_MODE_TRIANGLE)
@@ -639,11 +759,25 @@ public class TabIndicator
             tabMode = TAB_MODE_LINE;
         }
         this.mTabMode = tabMode;
+        invalidate();
     }
 
+    /**
+     * @return get line height
+     */
+    public float getLineHeight()
+    {
+        return mLineHeight;
+    }
+
+    /**
+     * set line height
+     * @param lineHeight
+     */
     public void setLineHeight(float lineHeight)
     {
         this.mLineHeight = lineHeight;
+        invalidate();
     }
 
     /**
@@ -655,6 +789,10 @@ public class TabIndicator
         return mLineColor;
     }
 
+    /**
+     * set line color
+     * @param lineColor
+     */
     public void setLineColor(int lineColor)
     {
         this.mLineColor = lineColor;
@@ -664,14 +802,20 @@ public class TabIndicator
     /**
      *
      * @return line style
-     * @see {@link LINE_STYLE_MATCH}
-     * @see {@link LINE_STYLE_WRAP}
+     *      @see {@link LINE_STYLE_MATCH}
+     *      @see {@link LINE_STYLE_WRAP}
      */
     public int getLineStyle()
     {
         return mLineStyle;
     }
 
+    /**
+     * set line style
+     * @param lineStyle
+     *      @see {@link LINE_STYLE_MATCH}
+     *      @see {@link LINE_STYLE_WRAP}
+     */
     public void setLineStyle(int lineStyle)
     {
         if (lineStyle == LINE_STYLE_MATCH)
@@ -684,18 +828,54 @@ public class TabIndicator
         invalidate();
     }
 
+    /**
+     * @return get triangle height
+     */
+    public float getTriangleHeight()
+    {
+        return mTriangleHeight;
+    }
+
+    /**
+     * set triangle height
+     * @param triangleHeight
+     */
     public void setTriangleHeight(float triangleHeight)
     {
         this.mTriangleHeight = triangleHeight;
         invalidate();
     }
 
+    /**
+     * @return get triangle width
+     */
+    public float getTriangleWidth()
+    {
+        return mTriangleWidth;
+    }
+
+    /**
+     * set triangle width
+     * @param triangleWidth
+     */
     public void setTriangleWidth(float triangleWidth)
     {
         this.mTriangleWidth = triangleWidth;
         invalidate();
     }
 
+    /**
+     * @return get triangle color
+     */
+    public int getTriangleColor()
+    {
+        return mTriangleColor;
+    }
+
+    /**
+     * set triangle color
+     * @param triangleColor
+     */
     public void setTriangleColor(int triangleColor)
     {
         this.mTriangleColor = triangleColor;
@@ -713,6 +893,10 @@ public class TabIndicator
         return mTriangleStyle;
     }
 
+    /**
+     * set triangle style
+     * @param triangleStyle
+     */
     public void setTriangleStyle(int triangleStyle)
     {
         if (triangleStyle == TRIANGLE_STYLE_FILL)
@@ -725,6 +909,45 @@ public class TabIndicator
         invalidate();
     }
 
+    /**
+     * @return rect padding left
+     */
+    public float getRectPaddingLeft()
+    {
+        return mRectPaddingLeft;
+    }
+
+    /**
+     * @return rect padding top
+     */
+    public float getRectPaddingTop()
+    {
+        return mRectPaddingTop;
+    }
+
+    /**
+     * @return rect padding right
+     */
+    public float getRectPaddingRight()
+    {
+        return mRectPaddingRight;
+    }
+
+    /**
+     * @return rect padding bottom
+     */
+    public float getRectPaddingBottom()
+    {
+        return mRectPaddingBottom;
+    }
+
+    /**
+     * set rect padding
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     */
     public void setRectPadding(float left, float top, float right, float bottom)
     {
         this.mRectPaddingLeft = left;
@@ -733,16 +956,55 @@ public class TabIndicator
         this.mRectPaddingBottom = bottom;
     }
 
+    /**
+     * @return rect color
+     */
+    public int getRectColor()
+    {
+        return mRectColor;
+    }
+
+    /**
+     * set rect color
+     * @param color
+     */
     public void setRectColor(int color)
     {
         this.mRectColor = color;
+        invalidate();
     }
 
+
+    /**
+     * @return rect radius
+     */
+    public float getRectRadius()
+    {
+        return mRectRadius;
+    }
+
+    /**
+     * set rect radius
+     * @param radius
+     */
     public void setRectRadius(float radius)
     {
         this.mRectRadius = radius;
+        invalidate();
     }
 
+    /**
+     * @return rect style
+     */
+    public int getRectStyle()
+    {
+        return this.mRectStyle;
+    }
+
+    /**
+     * set rect style
+     * @param style
+     */
     public void setRectStyle(int style)
     {
         if (style == RECT_STYLE_FILL)
@@ -752,19 +1014,57 @@ public class TabIndicator
         {
             this.mRectStyle = RECT_STYLE_STROKE;
         }
+        invalidate();
     }
 
+    /**
+     * @return rect stroke color
+     */
+    public int getRectStrokeColor()
+    {
+        return mRectStrokeColor;
+    }
+
+    /**
+     * set rect stroke color
+     * @param color
+     */
     public void setRectStrokeColor(int color)
     {
         this.mRectStrokeColor = color;
+        invalidate();
     }
 
+    /**
+     * @return rect stroke width
+     */
+    public float getRectStrokeWidth()
+    {
+        return mRectStrokeWidth;
+    }
+
+    /**
+     * set rect stroke width
+     * @param width
+     */
     public void setRectStrokeWidth(float width)
     {
         this.mRectStrokeWidth = width;
+        invalidate();
     }
 
+    /**
+     * @return triangle stroke width
+     */
+    public float getTriangleStrokeWidth()
+    {
+        return mTriangleStrokeWidth;
+    }
 
+    /**
+     * set triangle stroke width
+     * @param triangleStrokeWidth
+     */
     public void setTriangleStrokeWidth(float triangleStrokeWidth)
     {
         this.mTriangleStrokeWidth = triangleStrokeWidth;

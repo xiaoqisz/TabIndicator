@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/rect_action_style"
+          android:orderInCategory="100"
+          android:title="Rect Style"
+          app:showAsAction="never">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/rect_action_style_fill"
+                    android:title="Fill style"
+                    />
+                <item
+                    android:id="@+id/rect_action_style_stroke"
+                    android:title="Stroke style"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:id="@+id/rect_action_color"
+          android:orderInCategory="100"
+          android:title="Rect Color"
+          app:showAsAction="never"></item>
+
+    <item android:id="@+id/rect_action_stroke_color"
+          android:orderInCategory="100"
+          android:title="Rect Stroke Color"
+          app:showAsAction="never"></item>
+</menu>
