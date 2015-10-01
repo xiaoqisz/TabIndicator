@@ -3,6 +3,6 @@
 __TabIndicator is an Open Source Android library.__
 
 
-![line](art/line.gif) _
-![triangel](art/triangle.gif) _
+![line](art/line.gif) &nbsp;
+![triangel](art/triangle.gif) &nbsp;
 ![rect](art/rect.gif)
