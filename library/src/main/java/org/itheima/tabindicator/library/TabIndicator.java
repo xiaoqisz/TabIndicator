@@ -138,49 +138,49 @@ public class TabIndicator
         TypedArray ta = getContext().obtainStyledAttributes(set, R.styleable.TabIndicator);
 
         //通用的属性获取
-        mTabPaddingLeft = ta.getDimension(R.styleable.TabIndicator_tabPaddingLeft, mTabPaddingLeft);
-        mTabPaddingTop = ta.getDimension(R.styleable.TabIndicator_tabPaddingTop, mTabPaddingTop);
-        mTabPaddingRight = ta.getDimension(R.styleable.TabIndicator_tabPaddingRight,
+        mTabPaddingLeft = ta.getDimension(R.styleable.TabIndicator_tiTabPaddingLeft, mTabPaddingLeft);
+        mTabPaddingTop = ta.getDimension(R.styleable.TabIndicator_tiTabPaddingTop, mTabPaddingTop);
+        mTabPaddingRight = ta.getDimension(R.styleable.TabIndicator_tiTabPaddingRight,
                                            mTabPaddingRight);
-        mTabPaddingBottom = ta.getDimension(R.styleable.TabIndicator_tabPaddingBottom,
+        mTabPaddingBottom = ta.getDimension(R.styleable.TabIndicator_tiTabPaddingBottom,
                                             mTabPaddingBottom);
 
-        mTabBackground = ta.getResourceId(R.styleable.TabIndicator_tabBackground, mTabBackground);
-        mTabTextColor = ta.getResourceId(R.styleable.TabIndicator_tabTextColor, mTabTextColor);
-        mTabTextSize = ta.getDimension(R.styleable.TabIndicator_tabTextSize, mTabTextSize);
-        mTabTextBlod = ta.getBoolean(R.styleable.TabIndicator_tabTextBlod, mTabTextBlod);
+        mTabBackground = ta.getResourceId(R.styleable.TabIndicator_tiTabBackground, mTabBackground);
+        mTabTextColor = ta.getResourceId(R.styleable.TabIndicator_tiTabTextColor, mTabTextColor);
+        mTabTextSize = ta.getDimension(R.styleable.TabIndicator_tiTabTextSize, mTabTextSize);
+        mTabTextBlod = ta.getBoolean(R.styleable.TabIndicator_tiTabTextBlod, mTabTextBlod);
 
-        mUnderLineHeight = ta.getDimension(R.styleable.TabIndicator_underLineHeight,
+        mUnderLineHeight = ta.getDimension(R.styleable.TabIndicator_tiUnderLineHeight,
                                            mUnderLineHeight);
-        mUnderLineColor = ta.getColor(R.styleable.TabIndicator_underLineColor, mUnderLineColor);
+        mUnderLineColor = ta.getColor(R.styleable.TabIndicator_tiUnderLineColor, mUnderLineColor);
 
-        mTabMode = ta.getInt(R.styleable.TabIndicator_tabMode, mTabMode);
+        mTabMode = ta.getInt(R.styleable.TabIndicator_tiTabMode, mTabMode);
 
-        mLineHeight = ta.getDimension(R.styleable.TabIndicator_lineHeight, mLineHeight);
-        mLineColor = ta.getColor(R.styleable.TabIndicator_lineColor, mLineColor);
-        mLineStyle = ta.getInt(R.styleable.TabIndicator_lineStyle, mLineStyle);
+        mLineHeight = ta.getDimension(R.styleable.TabIndicator_tiLineHeight, mLineHeight);
+        mLineColor = ta.getColor(R.styleable.TabIndicator_tiLineColor, mLineColor);
+        mLineStyle = ta.getInt(R.styleable.TabIndicator_tiLineStyle, mLineStyle);
 
-        mTriangleHeight = ta.getDimension(R.styleable.TabIndicator_triangleHeight, mTriangleHeight);
-        mTriangleWidth = ta.getDimension(R.styleable.TabIndicator_triangleWidth, mTriangleWidth);
-        mTriangleColor = ta.getColor(R.styleable.TabIndicator_triangleColor, mTriangleColor);
-        mTriangleStyle = ta.getInt(R.styleable.TabIndicator_triangleStyle, mTriangleStyle);
-        mTriangleStrokeWidth = ta.getDimension(R.styleable.TabIndicator_triangleStrokeWidth,
+        mTriangleHeight = ta.getDimension(R.styleable.TabIndicator_tiTriangleHeight, mTriangleHeight);
+        mTriangleWidth = ta.getDimension(R.styleable.TabIndicator_tiTriangleWidth, mTriangleWidth);
+        mTriangleColor = ta.getColor(R.styleable.TabIndicator_tiTriangleColor, mTriangleColor);
+        mTriangleStyle = ta.getInt(R.styleable.TabIndicator_tiTriangleStyle, mTriangleStyle);
+        mTriangleStrokeWidth = ta.getDimension(R.styleable.TabIndicator_tiTriangleStrokeWidth,
                                                mTriangleStrokeWidth);
 
-        mRectPaddingLeft = ta.getDimension(R.styleable.TabIndicator_rectPaddingLeft,
+        mRectPaddingLeft = ta.getDimension(R.styleable.TabIndicator_tiRectPaddingLeft,
                                            mRectPaddingLeft);
-        mRectPaddingTop = ta.getDimension(R.styleable.TabIndicator_rectPaddingLeft,
+        mRectPaddingTop = ta.getDimension(R.styleable.TabIndicator_tiRectPaddingLeft,
                                           mRectPaddingTop);
-        mRectPaddingRight = ta.getDimension(R.styleable.TabIndicator_rectPaddingLeft,
+        mRectPaddingRight = ta.getDimension(R.styleable.TabIndicator_tiRectPaddingLeft,
                                             mRectPaddingRight);
-        mRectPaddingBottom = ta.getDimension(R.styleable.TabIndicator_rectPaddingLeft,
+        mRectPaddingBottom = ta.getDimension(R.styleable.TabIndicator_tiRectPaddingLeft,
                                              mRectPaddingBottom);
-        mRectColor = ta.getColor(R.styleable.TabIndicator_rectColor, mRectColor);
-        mRectRadius = ta.getDimension(R.styleable.TabIndicator_rectRadius, mRectRadius);
-        mRectStyle = ta.getInt(R.styleable.TabIndicator_rectStyle, mRectStyle);
-        mRectStrokeWidth = ta.getDimension(R.styleable.TabIndicator_rectStrokeWidth,
+        mRectColor = ta.getColor(R.styleable.TabIndicator_tiRectColor, mRectColor);
+        mRectRadius = ta.getDimension(R.styleable.TabIndicator_tiRectRadius, mRectRadius);
+        mRectStyle = ta.getInt(R.styleable.TabIndicator_tiRectStyle, mRectStyle);
+        mRectStrokeWidth = ta.getDimension(R.styleable.TabIndicator_tiRectStrokeWidth,
                                            mRectStrokeWidth);
-        mRectStrokeColor = ta.getColor(R.styleable.TabIndicator_rectStrokeColor, mRectStrokeColor);
+        mRectStrokeColor = ta.getColor(R.styleable.TabIndicator_tiRectStrokeColor, mRectStrokeColor);
 
         ta.recycle();
     }

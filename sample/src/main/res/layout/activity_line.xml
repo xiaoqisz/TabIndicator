@@ -9,10 +9,10 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        itheima:tabMode="line"
-        itheima:lineColor="#0000ff"
-        itheima:lineStyle="wrap"
-        itheima:lineHeight="8dp"
+        itheima:tiTabMode="line"
+        itheima:tiLineColor="#0000ff"
+        itheima:tiLineStyle="wrap"
+        itheima:tiLineHeight="8dp"
         />
 
     <android.support.v4.view.ViewPager

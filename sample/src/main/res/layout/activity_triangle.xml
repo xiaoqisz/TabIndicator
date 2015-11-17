@@ -9,12 +9,12 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        itheima:tabMode="triangle"
-        itheima:triangleHeight="8dp"
-        itheima:triangleStrokeWidth="1dp"
-        itheima:triangleStyle="stroke"
-        itheima:triangleColor="#ff0000"
-        itheima:triangleWidth="12dp"
+        itheima:tiTabMode="triangle"
+        itheima:tiTriangleHeight="8dp"
+        itheima:tiTriangleStrokeWidth="1dp"
+        itheima:tiTriangleStyle="stroke"
+        itheima:tiTriangleColor="#ff0000"
+        itheima:tiTriangleWidth="12dp"
         />
 
     <android.support.v4.view.ViewPager

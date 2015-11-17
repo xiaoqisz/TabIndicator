@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TabIndicator">
-        <attr name="tabPaddingLeft" format="dimension"/>
-        <attr name="tabPaddingRight" format="dimension"/>
-        <attr name="tabPaddingTop" format="dimension"/>
-        <attr name="tabPaddingBottom" format="dimension"/>
+        <attr name="tiTabPaddingLeft" format="dimension"/>
+        <attr name="tiTabPaddingRight" format="dimension"/>
+        <attr name="tiTabPaddingTop" format="dimension"/>
+        <attr name="tiTabPaddingBottom" format="dimension"/>
 
-        <attr name="tabBackground" format="reference"/>
-        <attr name="tabTextColor" format="reference|color"/>
-        <attr name="tabTextSize" format="dimension"/>
-        <attr name="tabTextBlod" format="boolean"/>
+        <attr name="tiTabBackground" format="reference"/>
+        <attr name="tiTabTextColor" format="reference|color"/>
+        <attr name="tiTabTextSize" format="dimension"/>
+        <attr name="tiTabTextBlod" format="boolean"/>
 
-        <attr name="underLineHeight" format="dimension"/>
-        <attr name="underLineColor" format="color"/>
+        <attr name="tiUnderLineHeight" format="dimension"/>
+        <attr name="tiUnderLineColor" format="color"/>
 
         <!-- tab indicator mode -->
-        <attr name="tabMode" format="enum">
+        <attr name="tiTabMode" format="enum">
             <enum name="line" value="0"/>
             <enum name="triangle" value="1"/>
             <enum name="rect" value="2"/>
         </attr>
 
         <!-- line mode attrs -->
-        <attr name="lineHeight" format="dimension"/>
-        <attr name="lineColor" format="color"/>
-        <attr name="lineStyle" format="enum">
+        <attr name="tiLineHeight" format="dimension"/>
+        <attr name="tiLineColor" format="color"/>
+        <attr name="tiLineStyle" format="enum">
             <enum name="match" value="0"/>
             <enum name="wrap" value="1"/>
         </attr>
 
         <!-- triangle mode attrs -->
-        <attr name="triangleHeight" format="dimension"/>
-        <attr name="triangleWidth" format="dimension"/>
-        <attr name="triangleColor" format="color"/>
-        <attr name="triangleStyle" format="enum">
+        <attr name="tiTriangleHeight" format="dimension"/>
+        <attr name="tiTriangleWidth" format="dimension"/>
+        <attr name="tiTriangleColor" format="color"/>
+        <attr name="tiTriangleStyle" format="enum">
             <enum name="fill" value="0"/>
             <enum name="stroke" value="1"/>
         </attr>
-        <attr name="triangleStrokeWidth" format="dimension"/>
+        <attr name="tiTriangleStrokeWidth" format="dimension"/>
 
         <!-- rect mode attrs -->
-        <attr name="rectPaddingLeft" format="dimension"/>
-        <attr name="rectPaddingTop" format="dimension"/>
-        <attr name="rectPaddingRight" format="dimension"/>
-        <attr name="rectPaddingBottom" format="dimension"/>
-        <attr name="rectColor" format="color"/>
-        <attr name="rectRadius" format="dimension"/>
-        <attr name="rectStyle" format="enum">
+        <attr name="tiRectPaddingLeft" format="dimension"/>
+        <attr name="tiRectPaddingTop" format="dimension"/>
+        <attr name="tiRectPaddingRight" format="dimension"/>
+        <attr name="tiRectPaddingBottom" format="dimension"/>
+        <attr name="tiRectColor" format="color"/>
+        <attr name="tiRectRadius" format="dimension"/>
+        <attr name="tiRectStyle" format="enum">
             <enum name="fill" value="0"/>
             <enum name="stroke" value="1"/>
         </attr>
-        <attr name="rectStrokeWidth" format="dimension"/>
-        <attr name="rectStrokeColor" format="color"/>
+        <attr name="tiRectStrokeWidth" format="dimension"/>
+        <attr name="tiRectStrokeColor" format="color"/>
     </declare-styleable>
 </resources>

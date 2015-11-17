@@ -9,12 +9,12 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        itheima:rectColor="#ff0000"
-        itheima:rectRadius="15dp"
-        itheima:rectStrokeColor="#0000ff"
-        itheima:rectStrokeWidth="2dp"
-        itheima:rectStyle="fill"
-        itheima:tabMode="rect"
+        itheima:tiRectColor="#ff0000"
+        itheima:tiRectRadius="15dp"
+        itheima:tiRectStrokeColor="#0000ff"
+        itheima:tiRectStrokeWidth="2dp"
+        itheima:tiRectStyle="fill"
+        itheima:tiTabMode="rect"
         />
 
     <android.support.v4.view.ViewPager
