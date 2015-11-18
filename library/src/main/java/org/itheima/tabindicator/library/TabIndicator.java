@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -138,7 +139,8 @@ public class TabIndicator
         TypedArray ta = getContext().obtainStyledAttributes(set, R.styleable.TabIndicator);
 
         //通用的属性获取
-        mTabPaddingLeft = ta.getDimension(R.styleable.TabIndicator_tiTabPaddingLeft, mTabPaddingLeft);
+        mTabPaddingLeft = ta.getDimension(R.styleable.TabIndicator_tiTabPaddingLeft,
+                                          mTabPaddingLeft);
         mTabPaddingTop = ta.getDimension(R.styleable.TabIndicator_tiTabPaddingTop, mTabPaddingTop);
         mTabPaddingRight = ta.getDimension(R.styleable.TabIndicator_tiTabPaddingRight,
                                            mTabPaddingRight);
@@ -160,7 +162,8 @@ public class TabIndicator
         mLineColor = ta.getColor(R.styleable.TabIndicator_tiLineColor, mLineColor);
         mLineStyle = ta.getInt(R.styleable.TabIndicator_tiLineStyle, mLineStyle);
 
-        mTriangleHeight = ta.getDimension(R.styleable.TabIndicator_tiTriangleHeight, mTriangleHeight);
+        mTriangleHeight = ta.getDimension(R.styleable.TabIndicator_tiTriangleHeight,
+                                          mTriangleHeight);
         mTriangleWidth = ta.getDimension(R.styleable.TabIndicator_tiTriangleWidth, mTriangleWidth);
         mTriangleColor = ta.getColor(R.styleable.TabIndicator_tiTriangleColor, mTriangleColor);
         mTriangleStyle = ta.getInt(R.styleable.TabIndicator_tiTriangleStyle, mTriangleStyle);
@@ -180,7 +183,8 @@ public class TabIndicator
         mRectStyle = ta.getInt(R.styleable.TabIndicator_tiRectStyle, mRectStyle);
         mRectStrokeWidth = ta.getDimension(R.styleable.TabIndicator_tiRectStrokeWidth,
                                            mRectStrokeWidth);
-        mRectStrokeColor = ta.getColor(R.styleable.TabIndicator_tiRectStrokeColor, mRectStrokeColor);
+        mRectStrokeColor = ta.getColor(R.styleable.TabIndicator_tiRectStrokeColor,
+                                       mRectStrokeColor);
 
         ta.recycle();
     }
@@ -190,8 +194,7 @@ public class TabIndicator
     {
         super.onDraw(canvas);
 
-        switch (mTabMode)
-        {
+        switch (mTabMode) {
             case TAB_MODE_LINE:
                 // 画line
                 drawLine(canvas);
@@ -229,8 +232,7 @@ public class TabIndicator
         float   left  = clr[0];
         float   right = clr[1];
 
-        if (mLineStyle == LINE_STYLE_WRAP)
-        {
+        if (mLineStyle == LINE_STYLE_WRAP) {
             left += mTabPaddingLeft;
             right -= mTabPaddingRight;
         }
@@ -263,11 +265,9 @@ public class TabIndicator
         float x3 = x1 + mTriangleWidth / 2f;
         float y3 = getMeasuredHeight() - mUnderLineHeight;
 
-        if (mTriangleStyle == TRIANGLE_STYLE_FILL)
-        {
+        if (mTriangleStyle == TRIANGLE_STYLE_FILL) {
             drawFillTriangle(x1, y1, x2, y2, x3, y3, canvas);
-        } else
-        {
+        } else {
             drawStrokeTriangle(x1, y1, x2, y2, x3, y3, canvas);
         }
     }
@@ -310,8 +310,7 @@ public class TabIndicator
                                   float y3,
                                   Canvas canvas)
     {
-        if (mTrianglePath == null)
-        {
+        if (mTrianglePath == null) {
             mTrianglePath = new Path();
         }
 
@@ -339,8 +338,7 @@ public class TabIndicator
         float top    = mRectPaddingTop;
         float bottom = getMeasuredHeight() - mUnderLineHeight - mRectPaddingBottom;
 
-        if (mRectDrawable == null)
-        {
+        if (mRectDrawable == null) {
             mRectDrawable = new GradientDrawable();
         }
 
@@ -348,11 +346,9 @@ public class TabIndicator
         mRectDrawable.setColor(mRectColor);
         mRectDrawable.setCornerRadius(mRectRadius);
 
-        if (mRectStyle == RECT_STYLE_STROKE)
-        {
+        if (mRectStyle == RECT_STYLE_STROKE) {
             mRectDrawable.setStroke((int) mRectStrokeWidth, mRectStrokeColor);
-        } else
-        {
+        } else {
             mRectDrawable.setStroke((int) mRectStrokeWidth, Color.TRANSPARENT);
         }
         mRectDrawable.setBounds((int) left, (int) top, (int) right, (int) bottom);
@@ -394,8 +390,7 @@ public class TabIndicator
      */
     private void drawUnderLine(Canvas canvas)
     {
-        if (mTabMode == TAB_MODE_TRIANGLE && mTriangleStyle == TRIANGLE_STYLE_STROKE)
-        {
+        if (mTabMode == TAB_MODE_TRIANGLE && mTriangleStyle == TRIANGLE_STYLE_STROKE) {
             return;
         }
 
@@ -418,8 +413,7 @@ public class TabIndicator
      */
     public void setViewPager(ViewPager pager)
     {
-        if (pager.getAdapter() == null)
-        {
+        if (pager.getAdapter() == null) {
             throw new IllegalStateException("ViewPager还没有调用setAdapter()来设置数据");
         }
 
@@ -427,8 +421,7 @@ public class TabIndicator
         this.mViewPager = pager;
 
         //设置监听
-        if (mTabPageListener == null)
-        {
+        if (mTabPageListener == null) {
             mTabPageListener = new TabPageListener();
         }
         this.mViewPager.setOnPageChangeListener(mTabPageListener);
@@ -452,8 +445,7 @@ public class TabIndicator
      */
     public void addOnPageChangeListener(ViewPager.OnPageChangeListener listener)
     {
-        if (!mListeners.contains(listener))
-        {
+        if (!mListeners.contains(listener)) {
             mListeners.add(listener);
         }
     }
@@ -470,19 +462,16 @@ public class TabIndicator
     private void notifyOnPageSelected(int position)
     {
         ListIterator<ViewPager.OnPageChangeListener> iterator = mListeners.listIterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             ViewPager.OnPageChangeListener next = iterator.next();
 
-            if (next != null)
-            {
+            if (next != null) {
                 next.onPageSelected(position);
             }
         }
 
         //通知listener
-        if (mListener != null)
-        {
+        if (mListener != null) {
             mListener.onPageSelected(position);
         }
     }
@@ -490,19 +479,16 @@ public class TabIndicator
     private void notifyOnPageScrolled(int position, float positionOffset, int positionOffsetPixels)
     {
         ListIterator<ViewPager.OnPageChangeListener> iterator = mListeners.listIterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             ViewPager.OnPageChangeListener next = iterator.next();
 
-            if (next != null)
-            {
+            if (next != null) {
                 next.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
         }
 
         //通知listener
-        if (mListener != null)
-        {
+        if (mListener != null) {
             mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
     }
@@ -510,19 +496,16 @@ public class TabIndicator
     private void notifyOnPageScrollStateChanged(int state)
     {
         ListIterator<ViewPager.OnPageChangeListener> iterator = mListeners.listIterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             ViewPager.OnPageChangeListener next = iterator.next();
 
-            if (next != null)
-            {
+            if (next != null) {
                 next.onPageScrollStateChanged(state);
             }
         }
 
         //通知listener
-        if (mListener != null)
-        {
+        if (mListener != null) {
             mListener.onPageScrollStateChanged(state);
         }
     }
@@ -536,11 +519,20 @@ public class TabIndicator
         mTabContainer.removeAllViews();
 
         PagerAdapter adapter = mViewPager.getAdapter();
-        for (int i = 0; i < adapter.getCount(); i++)
-        {
+        for (int i = 0; i < adapter.getCount(); i++) {
             CharSequence title = adapter.getPageTitle(i);
             addTab(title, i);
         }
+
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                notifyOnPageSelected(0);
+
+                getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            }
+        });
     }
 
     /**
@@ -563,13 +555,11 @@ public class TabIndicator
         tab.getPaint()
            .setFakeBoldText(mTabTextBlod);
         tab.setSelected(index == 0);//设置默认
-        tab.setOnClickListener(new OnClickListener()
-        {
+        tab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if (index == mViewPager.getCurrentItem())
-                {
+                if (index == mViewPager.getCurrentItem()) {
                     return;
                 }
                 mViewPager.setCurrentItem(index);
@@ -754,8 +744,7 @@ public class TabIndicator
      */
     public void setTabMode(int tabMode)
     {
-        if (tabMode != TAB_MODE_LINE && tabMode != TAB_MODE_RECT && tabMode != TAB_MODE_TRIANGLE)
-        {
+        if (tabMode != TAB_MODE_LINE && tabMode != TAB_MODE_RECT && tabMode != TAB_MODE_TRIANGLE) {
             tabMode = TAB_MODE_LINE;
         }
         this.mTabMode = tabMode;
@@ -802,8 +791,8 @@ public class TabIndicator
     /**
      *
      * @return line style
-     *      @see {@link LINE_STYLE_MATCH}
-     *      @see {@link LINE_STYLE_WRAP}
+     *      @see {@link TabIndicator#LINE_STYLE_MATCH}
+     *      @see {@link TabIndicator#LINE_STYLE_WRAP}
      */
     public int getLineStyle()
     {
@@ -813,16 +802,14 @@ public class TabIndicator
     /**
      * set line style
      * @param lineStyle
-     *      @see {@link LINE_STYLE_MATCH}
-     *      @see {@link LINE_STYLE_WRAP}
+     *      @see {@link TabIndicator#LINE_STYLE_MATCH}
+     *      @see {@link TabIndicator#LINE_STYLE_WRAP}
      */
     public void setLineStyle(int lineStyle)
     {
-        if (lineStyle == LINE_STYLE_MATCH)
-        {
+        if (lineStyle == LINE_STYLE_MATCH) {
             this.mLineStyle = lineStyle;
-        } else
-        {
+        } else {
             this.mLineStyle = LINE_STYLE_WRAP;
         }
         invalidate();
@@ -885,8 +872,8 @@ public class TabIndicator
     /**
      *
      * @return
-     * @see {@link TRIANGLE_STYLE_FILL}
-     * @see {@link TRIANGLE_STYLE_STROKE}
+     * @see {@link TabIndicator#TRIANGLE_STYLE_FILL}
+     * @see {@link TabIndicator#TRIANGLE_STYLE_STROKE}
      */
     public int getTriangleStyle()
     {
@@ -899,11 +886,9 @@ public class TabIndicator
      */
     public void setTriangleStyle(int triangleStyle)
     {
-        if (triangleStyle == TRIANGLE_STYLE_FILL)
-        {
+        if (triangleStyle == TRIANGLE_STYLE_FILL) {
             this.mTriangleStyle = triangleStyle;
-        } else
-        {
+        } else {
             this.mTriangleStyle = TRIANGLE_STYLE_STROKE;
         }
         invalidate();
@@ -1007,11 +992,9 @@ public class TabIndicator
      */
     public void setRectStyle(int style)
     {
-        if (style == RECT_STYLE_FILL)
-        {
+        if (style == RECT_STYLE_FILL) {
             this.mRectStyle = style;
-        } else
-        {
+        } else {
             this.mRectStyle = RECT_STYLE_STROKE;
         }
         invalidate();
@@ -1098,8 +1081,7 @@ public class TabIndicator
         public void onPageSelected(int position)
         {
             int count = mTabContainer.getChildCount();
-            for (int i = 0; i < count; i++)
-            {
+            for (int i = 0; i < count; i++) {
                 View view = mTabContainer.getChildAt(i);
                 view.setSelected(i == position);
             }
