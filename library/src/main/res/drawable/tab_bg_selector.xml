@@ -8,6 +8,6 @@
           android:state_selected="false"/>
     <item android:drawable="@color/tab_bg_focesed"
           android:state_focused="true"/>
-    <item android:drawable="@android:color/transparent"/>
+    <item android:drawable="@color/tab_bg_nomal"/>
 
 </selector>

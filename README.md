@@ -3,6 +3,42 @@
 __TabIndicator is an Open Source Android library.__
 
 
+### Update
+++++++++
+
+![visibleTabCount](art/visibleCount.png) &nbsp;
+![drawableLeft](art/drawablesupport.png) &nbsp;
+
+#### attr added
+
+```xml
+ <attr name="tiVisibletabCount" format="reference|integer" />
+        <attr name="tiDrawablePaddding" format="reference|integer"/>
+```
+
+#### listener added
+
+```java
+public interface OnTabClickListener {
+        void onTabClick(View view, int index);
+    }
+```
+```java
+public interface OnTabRepeatClickListener {
+        void onTabClick(View view, int index);
+    }
+```
+
+#### dataObserver
+
+```java
+//when the adapter didn`t override 
+//CharSequence getPageTitle(int position)
+setTitles(List<CharSequence> titles);
+```
+
+++++++++
+
 ![line](art/line.gif) &nbsp;
 ![triangel](art/triangle.gif) &nbsp;
 ![rect](art/rect.gif)

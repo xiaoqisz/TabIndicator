@@ -3,6 +3,7 @@
     <color name="tab_bg_pressed">#8833B5E5</color>
     <color name="tab_bg_focesed">#7733B5E5</color>
     <color name="tab_bg_selected">#6633B5E5</color>
+    <color name="tab_bg_nomal">#00000000</color>
 
     <color name="tab_title_selected">#0000ff</color>
     <color name="tab_title_normal">#000000</color>

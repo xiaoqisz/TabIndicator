@@ -9,11 +9,15 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        itheima:tiRectColor="#ff0000"
+        itheima:tiRectColor="#fff206"
         itheima:tiRectRadius="15dp"
         itheima:tiRectStrokeColor="#0000ff"
         itheima:tiRectStrokeWidth="2dp"
         itheima:tiRectStyle="fill"
+        itheima:tiTabBackground="@drawable/tab_bg_selector"
+        itheima:tiTabTextColor="@color/tab_textcolor_selector"
+        itheima:tiTabPaddingRight="20dp"
+        itheima:tiTabPaddingLeft="30dp"
         itheima:tiTabMode="rect"
         />
 

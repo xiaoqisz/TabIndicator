@@ -38,6 +38,10 @@ public class RectActivity
         mPager = (ViewPager) findViewById(R.id.pager);
         mIndicator = (TabIndicator) findViewById(R.id.indicator);
 
+        mIndicator.addLeftTabIcon(R.mipmap.tab1_n, R.mipmap.tab1_p);
+        mIndicator.addLeftTabIcon(R.mipmap.tab2_n, R.mipmap.tab2_p);
+        mIndicator.addLeftTabIcon(R.mipmap.tab3_n, R.mipmap.tab3_p);
+
 
         //设置adapter
         mPager.setAdapter(new MainPagerAdapter());
