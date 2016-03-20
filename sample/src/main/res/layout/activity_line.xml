@@ -13,6 +13,9 @@
         itheima:tiLineColor="#0000ff"
         itheima:tiLineStyle="wrap"
         itheima:tiLineHeight="8dp"
+        itheima:tiTabBackground="@drawable/tab_bg_selector"
+        itheima:tiTabTextColor="@color/tab_textcolor_selector"
+        itheima:tiVisibletabCount="2"
         />
 
     <android.support.v4.view.ViewPager

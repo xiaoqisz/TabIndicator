@@ -13,6 +13,8 @@
         itheima:tiTriangleHeight="8dp"
         itheima:tiTriangleStrokeWidth="1dp"
         itheima:tiTriangleStyle="stroke"
+        itheima:tiTabBackground="@drawable/tab_bg_selector"
+        itheima:tiTabTextColor="@color/tab_textcolor_selector"
         itheima:tiTriangleColor="#ff0000"
         itheima:tiTriangleWidth="12dp"
         />

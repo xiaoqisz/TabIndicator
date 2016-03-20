@@ -39,33 +39,13 @@ public class LineActivity
         mIndicator = (TabIndicator) findViewById(R.id.indicator);
 
 
+
         //设置adapter
         mPager.setAdapter(new MainPagerAdapter());
 
         //设置viewpager
         mIndicator.setViewPager(mPager);
 
-        //设置Viewpager滑动监听监听(注意)
-        mIndicator.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
-        {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
-            {
-
-            }
-
-            @Override
-            public void onPageSelected(int position)
-            {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state)
-            {
-
-            }
-        });
     }
 
     @Override
