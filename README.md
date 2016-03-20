@@ -12,24 +12,25 @@ __TabIndicator is an Open Source Android library.__
 #### attr added
 
 ```xml
- <attr name="tiVisibletabCount" format="reference|integer" />
-        <attr name="tiDrawablePaddding" format="reference|integer"/>
+ <attr name="tiVisibleTabCount" format="reference|integer" />
+ <attr name="tiDrawablePaddding" format="reference|integer"/>
 ```
 
 #### listener added
 
 ```java
-public interface OnTabClickListener {
-        void onTabClick(View view, int index);
-    }
-```
-```java
-public interface OnTabRepeatClickListener {
-        void onTabClick(View view, int index);
+public void addOnTabClickListener(OnTabClickListener listener) {
+    listener.onTabClick(View view, int index);
     }
 ```
 
-#### dataObserver
+```java
+ public void addOnTabRepeatClickListener(OnTabRepeatClickListener listener) {
+    listener.onTabClick(View view, int index);
+    }
+```
+
+#### data observer
 
 ```java
 //when the adapter didn`t override 

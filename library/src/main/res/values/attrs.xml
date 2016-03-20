@@ -13,7 +13,7 @@
 
         <attr name="tiUnderLineHeight" format="reference|dimension" />
         <attr name="tiUnderLineColor" format="reference|color" />
-        <attr name="tiVisibletabCount" format="reference|integer" />
+        <attr name="tiVisibleTabCount" format="reference|integer" />
         <attr name="tiDrawablePaddding" format="reference|integer"/>
 
         <!-- tab indicator mode -->

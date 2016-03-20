@@ -13,7 +13,10 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -179,7 +182,7 @@ public class TabIndicator
         mUnderLineColor = ta.getColor(R.styleable.TabIndicator_tiUnderLineColor, mUnderLineColor);
 
         mTabMode = ta.getInt(R.styleable.TabIndicator_tiTabMode, mTabMode);
-        mVisibleTabCount = ta.getInt(R.styleable.TabIndicator_tiVisibletabCount, mVisibleTabCount);
+        mVisibleTabCount = ta.getInt(R.styleable.TabIndicator_tiVisibleTabCount, mVisibleTabCount);
         if (mVisibleTabCount != -1) {
             isWeight = true;
         }
@@ -1081,11 +1084,7 @@ public class TabIndicator
 
 
     public void addLeftTabIcon(int idNormal, int idSelected) {
-        StateListDrawable sld = new StateListDrawable();
-        Drawable normal = idNormal == -1 ? null : getContext().getResources().getDrawable(idNormal);
-        Drawable select = idSelected == -1 ? null : getContext().getResources().getDrawable(idSelected);
-        sld.addState(new int[]{android.R.attr.state_selected}, select);
-        sld.addState(new int[]{}, normal);
+        StateListDrawable sld = getStateListDrawable(idNormal, idSelected);
         if (drawableLeft == null) {
             drawableLeft = new ArrayList<>();
         }
@@ -1093,11 +1092,7 @@ public class TabIndicator
     }
 
     public void addTopTabIcon(int idNormal, int idSelected) {
-        StateListDrawable sld = new StateListDrawable();
-        Drawable normal = idNormal == -1 ? null : getContext().getResources().getDrawable(idNormal);
-        Drawable select = idSelected == -1 ? null : getContext().getResources().getDrawable(idSelected);
-        sld.addState(new int[]{android.R.attr.state_selected}, select);
-        sld.addState(new int[]{}, normal);
+        StateListDrawable sld = getStateListDrawable(idNormal, idSelected);
         if (drawableTop == null) {
             drawableTop = new ArrayList<>();
         }
@@ -1105,23 +1100,25 @@ public class TabIndicator
     }
 
     public void addRightTabIcon(int idNormal, int idSelected) {
-        StateListDrawable sld = new StateListDrawable();
-        Drawable normal = idNormal == -1 ? null : getContext().getResources().getDrawable(idNormal);
-        Drawable select = idSelected == -1 ? null : getContext().getResources().getDrawable(idSelected);
-        sld.addState(new int[]{android.R.attr.state_selected}, select);
-        sld.addState(new int[]{}, normal);
+        StateListDrawable sld = getStateListDrawable(idNormal, idSelected);
         if (drawableRight == null) {
             drawableRight = new ArrayList<>();
         }
         drawableRight.add(sld);
     }
 
-    public void addBottomTabIcon(int idNormal, int idSelected) {
+    @NonNull
+    private StateListDrawable getStateListDrawable(int idNormal, int idSelected) {
         StateListDrawable sld = new StateListDrawable();
         Drawable normal = idNormal == -1 ? null : getContext().getResources().getDrawable(idNormal);
         Drawable select = idSelected == -1 ? null : getContext().getResources().getDrawable(idSelected);
         sld.addState(new int[]{android.R.attr.state_selected}, select);
         sld.addState(new int[]{}, normal);
+        return sld;
+    }
+
+    public void addBottomTabIcon(int idNormal, int idSelected) {
+        StateListDrawable sld = getStateListDrawable(idNormal, idSelected);
         if (drawableBottom == null) {
             drawableBottom = new ArrayList<>();
         }
@@ -1241,5 +1238,53 @@ public class TabIndicator
         paint.getTextBounds(text, 0, text.length(), bounds);
         return new int[]{bounds.width(), bounds.height()};
     }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        SavedState savedState = (SavedState) state;
+        super.onRestoreInstanceState(savedState.getSuperState());
+        mCurrentPosition = savedState.currentPosition;
+        requestLayout();
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState savedState = new SavedState(superState);
+        savedState.currentPosition = mCurrentPosition;
+        return savedState;
+    }
+
+    static class SavedState extends BaseSavedState {
+        int currentPosition;
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            currentPosition = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeInt(currentPosition);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+    }
+
 }
 
